@@ -11,9 +11,9 @@ class AppColors {
   static const Color spaceCadet = Color(0xFFF4FCFE);
 
   // Light Theme Colors
-  static const Color babyGreen = Color.fromARGB(255, 217, 250, 173);
-  static const Color cakeGreen = Color.fromARGB(255, 191, 236, 189);
-  static const Color parrotGreen = Color.fromARGB(255, 42, 214, 42);
-  static const Color cakeYellow = Color.fromARGB(255, 249, 255, 169);
-  static const Color darkGreen = Color.fromARGB(255, 0, 155, 13);
+  // static const Color babyGreen = Color.fromARGB(255, 217, 250, 173);
+  // static const Color cakeGreen = Color.fromARGB(255, 191, 236, 189);
+  // static const Color parrotGreen = Color.fromARGB(255, 42, 214, 42);
+  // static const Color cakeYellow = Color.fromARGB(255, 249, 255, 169);
+  // static const Color darkGreen = Color.fromARGB(255, 0, 155, 13);
 }
