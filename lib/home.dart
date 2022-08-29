@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:music_parrot/theme.dart';
 
 class MyHomePage extends StatefulWidget {
@@ -24,13 +25,9 @@ class _MyHomePageState extends State<MyHomePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Themes.lightTheme.colorScheme.background,
-      appBar: AppBar(
-        backgroundColor: Colors.transparent,
-        shadowColor: Colors.transparent,
-        actions: [
-          popupMenu(),
-        ],
-        title: Text(widget.title),
+      appBar: MyAppBar(
+        title: const Text('Music Parrot'),
+        widgets: [popupMenu()],
       ),
       body:
           homeBody(), // This trailing comma makes auto-formatting nicer for build methods.
@@ -39,11 +36,13 @@ class _MyHomePageState extends State<MyHomePage> {
 
   PopupMenuButton<String> popupMenu() {
     return PopupMenuButton<String>(
+      color: const Color.fromARGB(255, 205, 255, 148),
       padding: const EdgeInsets.all(20),
-      elevation: 0,
+      elevation: 1,
       onSelected: handleClick,
       itemBuilder: (BuildContext context) {
-        return {'Settings'}.map((String choice) {
+        return {'Settings', 'Share', 'About us', 'Contact us'}
+            .map((String choice) {
           return PopupMenuItem<String>(
             value: choice,
             child: Text(choice),
@@ -75,13 +74,15 @@ class _MyHomePageState extends State<MyHomePage> {
               ),
 
               // color: const Color.fromARGB(255, 181, 255, 97),
-              width: 250,
+              width: 300,
               height: 100,
               child: InkWell(
                 customBorder: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(12)),
                 onTap: () => setState(() {
-                  print("asd");
+                  Get.toNamed(
+                    '/levels',
+                  );
                 }),
                 child: const Center(
                     child: Text(
@@ -104,14 +105,36 @@ class ParrotImage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      margin: const EdgeInsets.all(20),
-      decoration: const BoxDecoration(
-          image: DecorationImage(
-        image: AssetImage('assets/images/parrot.png'),
-      )),
-      width: MediaQuery.of(context).size.width / 1.5,
-      height: MediaQuery.of(context).size.height / 3,
+    return Hero(
+      tag: 'parrot',
+      child: Container(
+        margin: const EdgeInsets.all(20),
+        decoration: const BoxDecoration(
+            image: DecorationImage(
+          image: AssetImage('assets/images/parrot.png'),
+        )),
+        width: MediaQuery.of(context).size.width / 1.5,
+        height: MediaQuery.of(context).size.height / 3,
+      ),
     );
   }
+}
+
+class MyAppBar extends StatelessWidget implements PreferredSizeWidget {
+  final List<Widget> widgets;
+  final Text title;
+
+  const MyAppBar({required this.widgets, required this.title, super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return AppBar(
+        backgroundColor: Colors.transparent,
+        shadowColor: Colors.transparent,
+        actions: widgets,
+        title: title);
+  }
+
+  @override
+  Size get preferredSize => const Size.fromHeight(60);
 }

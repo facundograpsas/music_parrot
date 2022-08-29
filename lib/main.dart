@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:get/get_navigation/get_navigation.dart';
+import 'package:music_parrot/screens/levels.dart';
 import 'package:music_parrot/theme.dart';
 
 import 'home.dart';
@@ -20,6 +21,19 @@ class MyApp extends StatelessWidget {
       title: 'Music Parrot',
       theme: Themes.lightTheme,
       home: const MyHomePage(title: 'Music Parrot'),
+      initialRoute: '/',
+      getPages: [
+        GetPage(
+            name: '/',
+            page: () => const MyHomePage(
+                  title: "Mmumu parrot!",
+                )),
+        GetPage(
+            name: '/levels',
+            page: () => const LevelsPage(),
+            transition: Transition.fadeIn,
+            transitionDuration: const Duration(milliseconds: 400)),
+      ],
     );
   }
 }
