@@ -16,19 +16,20 @@ class MelodiesPlayer extends StatefulWidget {
 class _MelodiesPlayerState extends State<MelodiesPlayer> {
   @override
   final player = AudioPlayer();
+  final controller = Get.put(MelodiesPlayerController());
 
   void initState() {
     // TODO: implement initState
 
-    widget.controller.play.listen((val) {
+    controller.play.listen((val) {
       if (val) {
         startMelodie();
       }
     });
 
-    player.onPlayerComplete.listen((event) {
-      player.resume();
-    });
+    // player.onPlayerComplete.listen((event) {
+    //   player.resume();
+    // });
     super.initState();
   }
 

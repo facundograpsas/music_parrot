@@ -2,7 +2,8 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:get/get_navigation/get_navigation.dart';
-import 'package:music_parrot/screens/levels.dart';
+import 'package:music_parrot/screens/game_screen.dart';
+import 'package:music_parrot/screens/levels_screen.dart';
 import 'package:music_parrot/theme.dart';
 
 import 'home.dart';
@@ -33,6 +34,12 @@ class MyApp extends StatelessWidget {
             page: () => const LevelsPage(),
             transition: Transition.fadeIn,
             transitionDuration: const Duration(milliseconds: 400)),
+        GetPage(
+          name: '/game_screen',
+          page: () => const GameScreen(),
+          // transition: Transition.fadeIn,
+          // transitionDuration: const Duration(milliseconds: 400)
+        ),
       ],
     );
   }
