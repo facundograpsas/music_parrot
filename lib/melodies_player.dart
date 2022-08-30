@@ -5,9 +5,7 @@ import 'package:flutter/src/widgets/framework.dart';
 import 'package:get/get.dart';
 
 class MelodiesPlayer extends StatefulWidget {
-  final MelodiesPlayerController controller;
-
-  const MelodiesPlayer({required this.controller, Key? key}) : super(key: key);
+  const MelodiesPlayer({Key? key}) : super(key: key);
 
   @override
   State<MelodiesPlayer> createState() => _MelodiesPlayerState();
@@ -23,18 +21,30 @@ class _MelodiesPlayerState extends State<MelodiesPlayer> {
 
     controller.play.listen((val) {
       if (val) {
-        startMelodie();
+        startMelodie('c');
       }
     });
 
-    // player.onPlayerComplete.listen((event) {
-    //   player.resume();
-    // });
+    controller.c.listen((val) {
+      // if (val) {
+      startMelodie('c');
+      // }
+    });
+
+    controller.d.listen((val) {
+      if (val) {
+        startMelodie('d');
+      }
+    });
+
+    player.onPlayerComplete.listen((event) {
+      player.stop();
+    });
     super.initState();
   }
 
-  Future<void> startMelodie() async {
-    await player.setSource(AssetSource('audio/as.wav'));
+  Future<void> startMelodie(tone) async {
+    await player.setSource(AssetSource('audio/$tone.wav'));
     await player.resume();
     print("Starts melodie");
   }
@@ -47,8 +57,18 @@ class _MelodiesPlayerState extends State<MelodiesPlayer> {
 
 class MelodiesPlayerController extends GetxController {
   final play = false.obs;
+  final c = false.obs;
+  final d = false.obs;
 
   void startPlaying() {
     play.value = !play.value;
+  }
+
+  void playC() {
+    c.value = !c.value;
+  }
+
+  void playD() {
+    d.value = !d.value;
   }
 }

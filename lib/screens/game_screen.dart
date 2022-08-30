@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/src/foundation/key.dart';
 import 'package:flutter/src/widgets/framework.dart';
+import 'package:get/get.dart';
 import 'package:music_parrot/widgets/app_bar.dart';
 import 'package:music_parrot/widgets/parrot_image.dart';
 
+import '../melodies_player.dart';
 import '../theme.dart';
 
 class GameScreen extends StatefulWidget {
@@ -14,6 +16,8 @@ class GameScreen extends StatefulWidget {
 }
 
 class _GameScreenState extends State<GameScreen> {
+  final controller = Get.put(MelodiesPlayerController());
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -26,6 +30,7 @@ class _GameScreenState extends State<GameScreen> {
               children: [
                 Column(
                   children: const [
+                    MelodiesPlayer(),
                     Text(
                       "C Major",
                       style: TextStyle(fontSize: 26),
@@ -63,14 +68,20 @@ class _GameScreenState extends State<GameScreen> {
             ),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceAround,
-              children: const [
-                NoteButton(number: '1'),
-                NoteButton(number: '2'),
-                NoteButton(number: '3'),
-                NoteButton(number: '4'),
-                NoteButton(number: '5'),
-                NoteButton(number: '6'),
-                NoteButton(number: '7'),
+              children: [
+                NoteButton(
+                  number: '1',
+                  callBack: (tdd) => {controller.playC(), print("Hola")},
+                ),
+                NoteButton(
+                  number: '2',
+                  callBack: (tdd) => {controller.playD(), print("Hola")},
+                ),
+                // NoteButton(number: '3'),
+                // NoteButton(number: '4'),
+                // NoteButton(number: '5'),
+                // NoteButton(number: '6'),
+                // NoteButton(number: '7'),
               ],
             ),
           ]),
@@ -80,9 +91,11 @@ class _GameScreenState extends State<GameScreen> {
 
 class NoteButton extends StatelessWidget {
   final String number;
+  final Function(TapDownDetails) callBack;
 
   const NoteButton({
     required this.number,
+    required this.callBack,
     Key? key,
   }) : super(key: key);
 
@@ -96,7 +109,9 @@ class NoteButton extends StatelessWidget {
         height: 50,
         width: 50,
         child: InkWell(
-          onTap: () => {},
+          // onTapUp: (details) => ,
+          onTapDown: (tdd) => callBack(tdd),
+          // onTap: () => onTap,
           child: Center(
               child: Text(
             number,

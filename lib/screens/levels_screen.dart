@@ -38,7 +38,7 @@ class _LevelsPageState extends State<LevelsPage> {
       ], title: const Text("Levels")),
       body: ListView(
         children: [
-          MelodiesPlayer(controller: controller),
+          MelodiesPlayer(),
           const Center(
               child: Hero(
             tag: 'level',
