@@ -70,21 +70,24 @@ class _MyHomePageState extends State<MyHomePage> {
               width: constraints.maxWidth * 0.8,
             ),
             HomeButton(
+              onTap: () => {Get.toNamed('/lets_parrot_screen')},
               height: constraints.maxHeight * 0.2,
               title: "Let's parrot!",
             ),
             Row(mainAxisAlignment: MainAxisAlignment.spaceAround, children: [
               Expanded(
                 child: HomeButton(
+                  onTap: () => {Get.toNamed('/levels')},
                   height: constraints.maxHeight * 0.13,
-                  title: 'Sandbox',
+                  title: 'Train your ear!',
                 ),
               ),
               const SizedBox(width: 20),
               Expanded(
                 child: HomeButton(
+                  onTap: () => {Get.toNamed('/levels')},
                   height: constraints.maxHeight * 0.13,
-                  title: 'Get inspire',
+                  title: 'Multiplayer',
                 ),
               )
             ])

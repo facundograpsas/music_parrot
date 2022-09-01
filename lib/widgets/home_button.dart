@@ -4,7 +4,9 @@ import 'package:get/get.dart';
 class HomeButton extends StatelessWidget {
   final double height;
   final String title;
-  const HomeButton({required this.height, this.title = '', Key? key})
+  final VoidCallback onTap;
+  const HomeButton(
+      {required this.height, required this.onTap, this.title = '', Key? key})
       : super(key: key);
 
   @override
@@ -27,12 +29,18 @@ class HomeButton extends StatelessWidget {
         child: InkWell(
           customBorder:
               RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
-          onTap: () => {Get.toNamed('/levels')},
-          child: Center(
+          onTap: onTap,
+          child: Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Center(
+                child: FittedBox(
               child: Text(
-            title,
-            style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 24),
-          )),
+                title,
+                style:
+                    const TextStyle(fontWeight: FontWeight.bold, fontSize: 24),
+              ),
+            )),
+          ),
         ),
       ),
     );

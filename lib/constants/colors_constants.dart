@@ -17,3 +17,14 @@ class AppColors {
   // static const Color cakeYellow = Color.fromARGB(255, 249, 255, 169);
   // static const Color darkGreen = Color.fromARGB(255, 0, 155, 13);
 }
+
+class Tones {
+  static List<Tone> notesList = [Tone('c', 60, false), Tone('d', 62, false)];
+}
+
+class Tone {
+  final String note;
+  final int number;
+  bool isPlaying;
+  Tone(this.note, this.number, this.isPlaying);
+}

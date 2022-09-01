@@ -69,33 +69,58 @@ class _GameScreenState extends State<GameScreen> {
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceAround,
               children: [
-                NoteButton(
-                  number: '1',
-                  callBack: (tdd) => {controller.playC(), print("Hola")},
-                ),
-                NoteButton(
-                  number: '2',
-                  callBack: (tdd) => {controller.playD(), print("Hola")},
-                ),
-                // NoteButton(number: '3'),
-                // NoteButton(number: '4'),
-                // NoteButton(number: '5'),
-                // NoteButton(number: '6'),
-                // NoteButton(number: '7'),
+                // NoteButton(
+                //     number: '1',
+                //     onTapDown: (tdd) => {controller.c.value = true},
+                //     onTapUp: (details) => {controller.c.value = false}),
+                // NoteButton(
+                //     number: '2',
+                //     onTapDown: (tdd) => {controller.d.value = true},
+                //     onTapUp: (details) => {controller.d.value = false}),
+                // NoteButton(
+                //     number: '3',
+                //     onTapDown: (tdd) => {controller.e.value = true},
+                //     onTapUp: (details) => {controller.e.value = false}),
+                // NoteButton(
+                //     number: '4',
+                //     onTapDown: (tdd) => {controller.f.value = true},
+                //     onTapUp: (details) => {controller.f.value = false}),
+                // NoteButton(
+                //     number: '5',
+                //     onTapDown: (tdd) => {controller.g.value = true},
+                //     onTapUp: (details) => {controller.g.value = false}),
+                // NoteButton(
+                //     number: '6',
+                //     onTapDown: (tdd) => {controller.a.value = true},
+                //     onTapUp: (details) => {controller.a.value = false}),
+                // NoteButton(
+                //     number: '7',
+                //     onTapDown: (tdd) => {controller.b.value = true},
+                //     onTapUp: (details) => {controller.b.value = false}),
+                // NoteButton(
+                //     number: '8',
+                //     onTapDown: (tdd) => {controller.c2.value = true},
+                //     onTapUp: (details) => {controller.c2.value = false}),
               ],
             ),
           ]),
         ));
   }
+
+  // playCNote(TapDownDetails details) {
+  //   var note = controller.notes.firstWhere((element) => element.note == 'c');
+  // }
 }
 
 class NoteButton extends StatelessWidget {
   final String number;
-  final Function(TapDownDetails) callBack;
+  final Function(TapDownDetails) onTapDown;
+  final Function(TapUpDetails) onTapUp;
 
   const NoteButton({
     required this.number,
-    required this.callBack,
+    required this.onTapDown,
+    required this.onTapUp,
     Key? key,
   }) : super(key: key);
 
@@ -107,10 +132,10 @@ class NoteButton extends StatelessWidget {
                 color: const Color.fromARGB(255, 187, 255, 190), width: 1),
             color: const Color.fromARGB(255, 76, 158, 55)),
         height: 50,
-        width: 50,
+        width: 40,
         child: InkWell(
-          // onTapUp: (details) => ,
-          onTapDown: (tdd) => callBack(tdd),
+          onTapUp: (details) => onTapUp(details),
+          onTapDown: (details) => onTapDown(details),
           // onTap: () => onTap,
           child: Center(
               child: Text(
