@@ -1,11 +1,9 @@
-import 'package:audioplayers/audioplayers.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter/src/foundation/key.dart';
-import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter_midi/flutter_midi.dart';
 import 'package:get/get.dart';
-import 'package:music_parrot/constants/constants.dart';
+
+import 'controllers/scales_controller.dart';
 
 class NotePlayer extends StatefulWidget {
   const NotePlayer({Key? key}) : super(key: key);
@@ -15,7 +13,7 @@ class NotePlayer extends StatefulWidget {
 }
 
 class _NotePlayerState extends State<NotePlayer> {
-  final controller = Get.put(NotePlyerController());
+  final controller = Get.put(ScalesController());
   final _flutterMidi = FlutterMidi();
 
   @override
@@ -37,11 +35,7 @@ class _NotePlayerState extends State<NotePlayer> {
   }
 
   void _play(int midi) {
-    if (false) {
-      // WebMidi.play(midi);
-    } else {
-      _flutterMidi.playMidiNote(midi: midi);
-    }
+    _flutterMidi.playMidiNote(midi: midi);
   }
 
   void _stop(int midi) {
@@ -50,29 +44,12 @@ class _NotePlayerState extends State<NotePlayer> {
 
   void load(String asset) async {
     _flutterMidi.unmute();
-    ByteData _byte = await rootBundle.load(asset);
-    _flutterMidi.prepare(sf2: _byte);
+    ByteData byte = await rootBundle.load(asset);
+    _flutterMidi.prepare(sf2: byte);
   }
 
   @override
   Widget build(BuildContext context) {
     return Container();
-  }
-}
-
-class NotePlyerController extends GetxController {
-  @override
-  void onReady() {
-    super.onReady();
-    currentScale.value = [...Scales.cMajor.map((e) => e.obs)].obs;
-  }
-
-  var notes = [...Tones.notesList.map((e) => e.obs)];
-  var currentScale = [].obs;
-
-  changeScale(scale) {
-    if (scale == 'cMinor') {
-      currentScale.value = [...Scales.cMinor.map((e) => e.obs)].obs;
-    }
   }
 }

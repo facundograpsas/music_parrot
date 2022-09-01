@@ -4,6 +4,7 @@ import 'package:get/get.dart';
 import 'package:music_parrot/melodies_player.dart';
 import 'package:music_parrot/screens/game_screen.dart';
 
+import '../controllers/scales_controller.dart';
 import '../theme.dart';
 import '../widgets/app_bar.dart';
 
@@ -17,7 +18,7 @@ class LevelsPage extends StatefulWidget {
 class _LevelsPageState extends State<LevelsPage> {
   @override
   Widget build(BuildContext context) {
-    final controller = Get.put(NotePlyerController());
+    final controller = Get.put(ScalesController());
 
     return Scaffold(
       backgroundColor: Themes.lightTheme.colorScheme.background,
@@ -72,7 +73,7 @@ class LevelCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final otherController = Get.put(NotePlyerController());
+    final otherController = Get.put(ScalesController());
     return SizedBox(
       width: MediaQuery.of(context).size.width / 1.1,
       height: MediaQuery.of(context).size.height / 7,

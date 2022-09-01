@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 
 class ParrotImage extends StatelessWidget {
-  final double height;
-  final double width;
+  final double? height;
+  final double? width;
 
   const ParrotImage({
-    required this.height,
-    required this.width,
+    this.height,
+    this.width,
     Key? key,
   }) : super(key: key);
 

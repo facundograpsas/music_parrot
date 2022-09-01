@@ -1,11 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/src/foundation/key.dart';
-import 'package:flutter/src/widgets/framework.dart';
 import 'package:get/get.dart';
 import 'package:music_parrot/widgets/app_bar.dart';
 import 'package:music_parrot/widgets/parrot_image.dart';
 
 import '../constants/constants.dart';
+import '../controllers/scales_controller.dart';
 import '../melodies_player.dart';
 import '../theme.dart';
 
@@ -17,34 +16,35 @@ class LetsParrotScreen extends StatefulWidget {
 }
 
 class _LetsParrotScreenState extends State<LetsParrotScreen> {
-  final controller = Get.put(NotePlyerController());
+  final controller = Get.put(ScalesController());
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
         backgroundColor: Themes.lightTheme.colorScheme.background,
         appBar: const MyAppBar(widgets: [], title: Text("Let's parrot")),
-        body: Container(
-          child: Column(mainAxisAlignment: MainAxisAlignment.start, children: [
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceAround,
-              children: [
-                Column(
-                  children: [
-                    const NotePlayer(),
-                    SizedBox(
-                      height: MediaQuery.of(context).size.height * 0.3,
-                      width: MediaQuery.of(context).size.width * 0.9,
-                      child: Row(
-                        children: [
-                          Column(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              const Text(
-                                "Select scale",
-                                style: TextStyle(fontSize: 22),
-                              ),
-                              DropdownButton<String>(
+        body: Column(mainAxisAlignment: MainAxisAlignment.start, children: [
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceAround,
+            children: [
+              Column(
+                children: [
+                  const NotePlayer(),
+                  SizedBox(
+                    height: MediaQuery.of(context).size.height * 0.3,
+                    width: MediaQuery.of(context).size.width * 0.9,
+                    child: Row(
+                      children: [
+                        Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            const Text(
+                              "Select scale",
+                              style: TextStyle(fontSize: 22),
+                            ),
+                            Obx(
+                              () => DropdownButton<String>(
+                                  value: controller.scaleName.value,
                                   items: Scales.scalesNames
                                       .map<DropdownMenuItem<String>>(
                                           (String value) {
@@ -52,87 +52,86 @@ class _LetsParrotScreenState extends State<LetsParrotScreen> {
                                         value: value, child: Text(value));
                                   }).toList(),
                                   onChanged: onChanged),
-                            ],
-                          ),
-                          Expanded(
-                              child: const ParrotImage(height: 200, width: 200))
-                          // ParrotImage(height: 200, width: 200)
-                        ],
-                      ),
+                            ),
+                          ],
+                        ),
+                        const Expanded(child: ParrotImage())
+                      ],
                     ),
-                  ],
-                ),
-              ],
-            ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Ink(
-                  child: InkWell(
-                    onTap: () => {controller.changeScale('cMinor')},
-                    child: Padding(
-                      padding: const EdgeInsets.all(20.0),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: const [
-                          Icon(
-                            Icons.play_arrow_rounded,
-                            size: 80,
-                            color: Colors.green,
-                          ),
-                          Text(
-                            'Play',
-                            style: TextStyle(fontSize: 26),
-                          )
-                        ],
-                      ),
+                  ),
+                ],
+              ),
+            ],
+          ),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Ink(
+                child: InkWell(
+                  onTap: () => {controller.changeScale('cMinor')},
+                  child: Padding(
+                    padding: const EdgeInsets.all(20.0),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: const [
+                        Icon(
+                          Icons.play_arrow_rounded,
+                          size: 80,
+                          color: Colors.green,
+                        ),
+                        Text(
+                          'Play',
+                          style: TextStyle(fontSize: 26),
+                        )
+                      ],
                     ),
                   ),
                 ),
-                Ink(
-                  child: InkWell(
-                    onTap: () => {},
-                    child: Padding(
-                      padding: const EdgeInsets.all(20.0),
-                      child: Row(
-                        children: const [
-                          Icon(
-                            Icons.now_widgets_rounded,
-                            size: 60,
-                            color: Colors.purple,
-                          ),
-                          Text(
-                            'New',
-                            style: TextStyle(fontSize: 26),
-                          )
-                        ],
-                      ),
+              ),
+              Ink(
+                child: InkWell(
+                  onTap: () => {},
+                  child: Padding(
+                    padding: const EdgeInsets.all(20.0),
+                    child: Row(
+                      children: const [
+                        Icon(
+                          Icons.now_widgets_rounded,
+                          size: 60,
+                          color: Colors.purple,
+                        ),
+                        Text(
+                          'New',
+                          style: TextStyle(fontSize: 26),
+                        )
+                      ],
                     ),
                   ),
-                )
-              ],
-            ),
-            Obx(() => Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceAround,
-                  children:
-                      controller.currentScale.asMap().entries.map((entry) {
-                    return NoteButton(
-                        number: (entry.key + 1).toString(),
-                        onTapDown: (tdd) =>
-                            controller.currentScale[entry.key].update((val) {
-                              val.isPlaying = true;
-                            }),
-                        onTapUp: (d) =>
-                            controller.currentScale[entry.key].update((val) {
-                              val?.isPlaying = false;
-                            }));
-                  }).toList(),
-                )),
-          ]),
-        ));
+                ),
+              )
+            ],
+          ),
+          Obx(() => Row(
+                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                children: controller.currentScale.asMap().entries.map((entry) {
+                  return NoteButton(
+                      number: (entry.key + 1).toString(),
+                      onTapDown: (tdd) =>
+                          controller.currentScale[entry.key].update((val) {
+                            val.isPlaying = true;
+                          }),
+                      onTapUp: (d) =>
+                          controller.currentScale[entry.key].update((val) {
+                            val?.isPlaying = false;
+                          }));
+                }).toList(),
+              )),
+        ]));
   }
 
-  void onChanged(value) {}
+  void onChanged(value) {
+    controller.scaleName.value = value;
+  }
 }
 
 class NoteButton extends StatelessWidget {
@@ -163,7 +162,7 @@ class NoteButton extends StatelessWidget {
           child: Center(
               child: Text(
             number,
-            style: TextStyle(color: Colors.white),
+            style: const TextStyle(color: Colors.white),
           )),
         ));
   }

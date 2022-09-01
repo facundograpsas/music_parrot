@@ -1,10 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/src/foundation/key.dart';
-import 'package:flutter/src/widgets/framework.dart';
 import 'package:get/get.dart';
 import 'package:music_parrot/widgets/app_bar.dart';
 import 'package:music_parrot/widgets/parrot_image.dart';
 
+import '../controllers/scales_controller.dart';
 import '../melodies_player.dart';
 import '../theme.dart';
 
@@ -16,95 +15,60 @@ class GameScreen extends StatefulWidget {
 }
 
 class _GameScreenState extends State<GameScreen> {
-  final controller = Get.put(NotePlyerController());
+  final controller = Get.put(ScalesController());
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
         backgroundColor: Themes.lightTheme.colorScheme.background,
         appBar: const MyAppBar(widgets: [], title: Text('C Major')),
-        body: Container(
-          child: Column(mainAxisAlignment: MainAxisAlignment.start, children: [
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceAround,
-              children: [
-                Column(
-                  children: const [
-                    NotePlayer(),
-                    Text(
-                      "C Major",
-                      style: TextStyle(fontSize: 26),
-                    ),
-                    Text(
-                      "Level 1",
-                      style: TextStyle(fontSize: 18),
-                    ),
-                  ],
-                ),
-                ParrotImage(height: 200, width: 200)
-              ],
-            ),
-            InkWell(
-              onTap: () => {},
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Container(
-                    margin: EdgeInsets.all(1),
-                    height: 100.0,
-                    width: 100.0,
-                    child: const Icon(
-                      Icons.play_arrow_rounded,
-                      size: 100,
-                      color: Colors.green,
-                    ),
-                  ),
-                  const Text(
-                    'Play melodie',
+        body: Column(mainAxisAlignment: MainAxisAlignment.start, children: [
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceAround,
+            children: [
+              Column(
+                children: const [
+                  NotePlayer(),
+                  Text(
+                    "C Major",
                     style: TextStyle(fontSize: 26),
-                  )
+                  ),
+                  Text(
+                    "Level 1",
+                    style: TextStyle(fontSize: 18),
+                  ),
                 ],
               ),
-            ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceAround,
+              const ParrotImage(height: 200, width: 200)
+            ],
+          ),
+          InkWell(
+            onTap: () => {},
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                // NoteButton(
-                //     number: '1',
-                //     onTapDown: (tdd) => {controller.c.value = true},
-                //     onTapUp: (details) => {controller.c.value = false}),
-                // NoteButton(
-                //     number: '2',
-                //     onTapDown: (tdd) => {controller.d.value = true},
-                //     onTapUp: (details) => {controller.d.value = false}),
-                // NoteButton(
-                //     number: '3',
-                //     onTapDown: (tdd) => {controller.e.value = true},
-                //     onTapUp: (details) => {controller.e.value = false}),
-                // NoteButton(
-                //     number: '4',
-                //     onTapDown: (tdd) => {controller.f.value = true},
-                //     onTapUp: (details) => {controller.f.value = false}),
-                // NoteButton(
-                //     number: '5',
-                //     onTapDown: (tdd) => {controller.g.value = true},
-                //     onTapUp: (details) => {controller.g.value = false}),
-                // NoteButton(
-                //     number: '6',
-                //     onTapDown: (tdd) => {controller.a.value = true},
-                //     onTapUp: (details) => {controller.a.value = false}),
-                // NoteButton(
-                //     number: '7',
-                //     onTapDown: (tdd) => {controller.b.value = true},
-                //     onTapUp: (details) => {controller.b.value = false}),
-                // NoteButton(
-                //     number: '8',
-                //     onTapDown: (tdd) => {controller.c2.value = true},
-                //     onTapUp: (details) => {controller.c2.value = false}),
+                Container(
+                  margin: const EdgeInsets.all(1),
+                  height: 100.0,
+                  width: 100.0,
+                  child: const Icon(
+                    Icons.play_arrow_rounded,
+                    size: 100,
+                    color: Colors.green,
+                  ),
+                ),
+                const Text(
+                  'Play melodie',
+                  style: TextStyle(fontSize: 26),
+                )
               ],
             ),
-          ]),
-        ));
+          ),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceAround,
+            children: const [],
+          ),
+        ]));
   }
 
   // playCNote(TapDownDetails details) {
@@ -140,7 +104,7 @@ class NoteButton extends StatelessWidget {
           child: Center(
               child: Text(
             number,
-            style: TextStyle(color: Colors.white),
+            style: const TextStyle(color: Colors.white),
           )),
         ));
   }
