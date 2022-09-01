@@ -16,7 +16,7 @@ class GameScreen extends StatefulWidget {
 }
 
 class _GameScreenState extends State<GameScreen> {
-  final controller = Get.put(MelodiesPlayerController());
+  final controller = Get.put(NotePlyerController());
 
   @override
   Widget build(BuildContext context) {
@@ -30,7 +30,7 @@ class _GameScreenState extends State<GameScreen> {
               children: [
                 Column(
                   children: const [
-                    MelodiesPlayer(),
+                    NotePlayer(),
                     Text(
                       "C Major",
                       style: TextStyle(fontSize: 26),

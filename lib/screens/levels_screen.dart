@@ -17,7 +17,7 @@ class LevelsPage extends StatefulWidget {
 class _LevelsPageState extends State<LevelsPage> {
   @override
   Widget build(BuildContext context) {
-    final controller = Get.put(MelodiesPlayerController());
+    final controller = Get.put(NotePlyerController());
 
     return Scaffold(
       backgroundColor: Themes.lightTheme.colorScheme.background,
@@ -38,7 +38,7 @@ class _LevelsPageState extends State<LevelsPage> {
       ], title: const Text("Levels")),
       body: ListView(
         children: [
-          MelodiesPlayer(),
+          NotePlayer(),
           const Center(
               child: Hero(
             tag: 'level',
@@ -72,7 +72,7 @@ class LevelCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final otherController = Get.put(MelodiesPlayerController());
+    final otherController = Get.put(NotePlyerController());
     return SizedBox(
       width: MediaQuery.of(context).size.width / 1.1,
       height: MediaQuery.of(context).size.height / 7,

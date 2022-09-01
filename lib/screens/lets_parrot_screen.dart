@@ -17,7 +17,7 @@ class LetsParrotScreen extends StatefulWidget {
 }
 
 class _LetsParrotScreenState extends State<LetsParrotScreen> {
-  final controller = Get.put(MelodiesPlayerController());
+  final controller = Get.put(NotePlyerController());
 
   @override
   Widget build(BuildContext context) {
@@ -31,7 +31,7 @@ class _LetsParrotScreenState extends State<LetsParrotScreen> {
               children: [
                 Column(
                   children: const [
-                    MelodiesPlayer(),
+                    NotePlayer(),
                     Text(
                       "C Major",
                       style: TextStyle(fontSize: 26),
@@ -95,57 +95,18 @@ class _LetsParrotScreenState extends State<LetsParrotScreen> {
             ),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceAround,
-              children: Tones.notesList.asMap().entries.map((entry) {
+              children: controller.currentScale.asMap().entries.map((entry) {
                 return NoteButton(
                     number: (entry.key + 1).toString(),
                     onTapDown: (tdd) =>
-                        controller.notes[entry.key].update((val) {
+                        controller.currentScale[entry.key].update((val) {
                           val?.isPlaying = true;
                         }),
-                    onTapUp: (d) => controller.notes[entry.key].update((val) {
+                    onTapUp: (d) =>
+                        controller.currentScale[entry.key].update((val) {
                           val?.isPlaying = false;
                         }));
               }).toList(),
-              // children: [
-              //   Tones.notesList.map(((e) => {}
-              //   return  ))
-              //   NoteButton(
-              //       number: '1',
-              //       onTapDown: (tdd) => {
-              //             controller.notes.value[0].update((val) {
-              //               val?.isPlaying = true;
-              //             })
-              //           },
-              //       onTapUp: (details) => {controller.c.value = false}),
-              //   NoteButton(
-              //       number: '2',
-              //       onTapDown: (tdd) => {controller.d.value = true},
-              //       onTapUp: (details) => {controller.d.value = false}),
-              //   NoteButton(
-              //       number: '3',
-              //       onTapDown: (tdd) => {controller.e.value = true},
-              //       onTapUp: (details) => {controller.e.value = false}),
-              //   NoteButton(
-              //       number: '4',
-              //       onTapDown: (tdd) => {controller.f.value = true},
-              //       onTapUp: (details) => {controller.f.value = false}),
-              //   NoteButton(
-              //       number: '5',
-              //       onTapDown: (tdd) => {controller.g.value = true},
-              //       onTapUp: (details) => {controller.g.value = false}),
-              //   NoteButton(
-              //       number: '6',
-              //       onTapDown: (tdd) => {controller.a.value = true},
-              //       onTapUp: (details) => {controller.a.value = false}),
-              //   NoteButton(
-              //       number: '7',
-              //       onTapDown: (tdd) => {controller.b.value = true},
-              //       onTapUp: (details) => {controller.b.value = false}),
-              //   NoteButton(
-              //       number: '8',
-              //       onTapDown: (tdd) => {controller.c2.value = true},
-              //       onTapUp: (details) => {controller.c2.value = false}),
-              // ],
             ),
           ]),
         ));
