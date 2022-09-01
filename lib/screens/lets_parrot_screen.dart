@@ -5,7 +5,7 @@ import 'package:get/get.dart';
 import 'package:music_parrot/widgets/app_bar.dart';
 import 'package:music_parrot/widgets/parrot_image.dart';
 
-import '../constants/colors_constants.dart';
+import '../constants/constants.dart';
 import '../melodies_player.dart';
 import '../theme.dart';
 
@@ -23,26 +23,45 @@ class _LetsParrotScreenState extends State<LetsParrotScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
         backgroundColor: Themes.lightTheme.colorScheme.background,
-        appBar: const MyAppBar(widgets: [], title: Text('C Major')),
+        appBar: const MyAppBar(widgets: [], title: Text("Let's parrot")),
         body: Container(
           child: Column(mainAxisAlignment: MainAxisAlignment.start, children: [
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceAround,
               children: [
                 Column(
-                  children: const [
-                    NotePlayer(),
-                    Text(
-                      "C Major",
-                      style: TextStyle(fontSize: 26),
-                    ),
-                    Text(
-                      "Level 1",
-                      style: TextStyle(fontSize: 18),
+                  children: [
+                    const NotePlayer(),
+                    SizedBox(
+                      height: MediaQuery.of(context).size.height * 0.3,
+                      width: MediaQuery.of(context).size.width * 0.9,
+                      child: Row(
+                        children: [
+                          Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              const Text(
+                                "Select scale",
+                                style: TextStyle(fontSize: 22),
+                              ),
+                              DropdownButton<String>(
+                                  items: Scales.scalesNames
+                                      .map<DropdownMenuItem<String>>(
+                                          (String value) {
+                                    return DropdownMenuItem<String>(
+                                        value: value, child: Text(value));
+                                  }).toList(),
+                                  onChanged: onChanged),
+                            ],
+                          ),
+                          Expanded(
+                              child: const ParrotImage(height: 200, width: 200))
+                          // ParrotImage(height: 200, width: 200)
+                        ],
+                      ),
                     ),
                   ],
                 ),
-                ParrotImage(height: 200, width: 200)
               ],
             ),
             Row(
@@ -50,7 +69,7 @@ class _LetsParrotScreenState extends State<LetsParrotScreen> {
               children: [
                 Ink(
                   child: InkWell(
-                    onTap: () => {},
+                    onTap: () => {controller.changeScale('cMinor')},
                     child: Padding(
                       padding: const EdgeInsets.all(20.0),
                       child: Row(
@@ -93,24 +112,27 @@ class _LetsParrotScreenState extends State<LetsParrotScreen> {
                 )
               ],
             ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceAround,
-              children: controller.currentScale.asMap().entries.map((entry) {
-                return NoteButton(
-                    number: (entry.key + 1).toString(),
-                    onTapDown: (tdd) =>
-                        controller.currentScale[entry.key].update((val) {
-                          val?.isPlaying = true;
-                        }),
-                    onTapUp: (d) =>
-                        controller.currentScale[entry.key].update((val) {
-                          val?.isPlaying = false;
-                        }));
-              }).toList(),
-            ),
+            Obx(() => Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceAround,
+                  children:
+                      controller.currentScale.asMap().entries.map((entry) {
+                    return NoteButton(
+                        number: (entry.key + 1).toString(),
+                        onTapDown: (tdd) =>
+                            controller.currentScale[entry.key].update((val) {
+                              val.isPlaying = true;
+                            }),
+                        onTapUp: (d) =>
+                            controller.currentScale[entry.key].update((val) {
+                              val?.isPlaying = false;
+                            }));
+                  }).toList(),
+                )),
           ]),
         ));
   }
+
+  void onChanged(value) {}
 }
 
 class NoteButton extends StatelessWidget {

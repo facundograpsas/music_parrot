@@ -5,7 +5,7 @@ import 'package:flutter/src/foundation/key.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter_midi/flutter_midi.dart';
 import 'package:get/get.dart';
-import 'package:music_parrot/constants/colors_constants.dart';
+import 'package:music_parrot/constants/constants.dart';
 
 class NotePlayer extends StatefulWidget {
   const NotePlayer({Key? key}) : super(key: key);
@@ -22,16 +22,17 @@ class _NotePlayerState extends State<NotePlayer> {
   void initState() {
     load('assets/sf2/miinstrumento-1.sf2');
 
-    for (var element in controller.currentScale) {
-      element.listen((note) {
-        if (note!.isPlaying) {
-          _play(note.number);
-        } else {
-          _stop(note.number);
-        }
-      });
-    }
-
+    controller.currentScale.listen((p0) {
+      for (var note in p0) {
+        note.listen((p0) {
+          if (p0!.isPlaying) {
+            _play(p0.number);
+          } else {
+            _stop(p0.number);
+          }
+        });
+      }
+    });
     super.initState();
   }
 
@@ -60,7 +61,18 @@ class _NotePlayerState extends State<NotePlayer> {
 }
 
 class NotePlyerController extends GetxController {
-  var notes = [...Tones.notesList.map((e) => e.obs)];
+  @override
+  void onReady() {
+    super.onReady();
+    currentScale.value = [...Scales.cMajor.map((e) => e.obs)].obs;
+  }
 
-  var currentScale = [...Scales.cMajor.map((e) => e.obs)];
+  var notes = [...Tones.notesList.map((e) => e.obs)];
+  var currentScale = [].obs;
+
+  changeScale(scale) {
+    if (scale == 'cMinor') {
+      currentScale.value = [...Scales.cMinor.map((e) => e.obs)].obs;
+    }
+  }
 }
