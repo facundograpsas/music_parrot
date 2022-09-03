@@ -37,22 +37,17 @@ class _LetsParrotScreenState extends State<LetsParrotScreen> {
                       children: [
                         Column(
                           mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            const Text(
+                          children: const [
+                            Text(
+                              "Select Key",
+                              style: TextStyle(fontSize: 22),
+                            ),
+                            KeysDropDown(),
+                            Text(
                               "Select scale",
                               style: TextStyle(fontSize: 22),
                             ),
-                            Obx(
-                              () => DropdownButton<String>(
-                                  value: controller.scaleName.value,
-                                  items: Scales.scalesNames
-                                      .map<DropdownMenuItem<String>>(
-                                          (String value) {
-                                    return DropdownMenuItem<String>(
-                                        value: value, child: Text(value));
-                                  }).toList(),
-                                  onChanged: onChanged),
-                            ),
+                            ScalesDropDown(),
                           ],
                         ),
                         const Expanded(child: ParrotImage())
@@ -128,9 +123,59 @@ class _LetsParrotScreenState extends State<LetsParrotScreen> {
               )),
         ]));
   }
+}
+
+class ScalesDropDown extends StatefulWidget {
+  const ScalesDropDown({super.key});
+
+  @override
+  State<ScalesDropDown> createState() => _ScalesDropDownState();
+}
+
+class _ScalesDropDownState extends State<ScalesDropDown> {
+  final controller = Get.put(ScalesController());
+
+  @override
+  Widget build(BuildContext context) {
+    return Obx(() => DropdownButton<String>(
+        value: controller.scaleName.value,
+        items: Scales.scalesNames.map<DropdownMenuItem<String>>((String value) {
+          return DropdownMenuItem<String>(value: value, child: Text(value));
+        }).toList(),
+        onChanged: onChanged));
+  }
 
   void onChanged(value) {
     controller.scaleName.value = value;
+  }
+}
+
+class KeysDropDown extends StatefulWidget {
+  const KeysDropDown({super.key});
+
+  @override
+  State<KeysDropDown> createState() => _KeysDropDownState();
+}
+
+class _KeysDropDownState extends State<KeysDropDown> {
+  final controller = Get.put(ScalesController());
+
+  @override
+  Widget build(BuildContext context) {
+    return Obx(() => DropdownButton(
+        value: controller.currentKeyNumber.value,
+        items: Tones.toneMap
+            .map((key, value) {
+              return MapEntry(
+                  key, DropdownMenuItem(value: value, child: Text(key)));
+            })
+            .values
+            .toList(),
+        onChanged: onChanged));
+  }
+
+  void onChanged(value) {
+    controller.currentKeyNumber.value = value;
   }
 }
 

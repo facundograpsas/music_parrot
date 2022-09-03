@@ -19,17 +19,6 @@ class AppColors {
 }
 
 class Tones {
-  static List<Tone> notesList = [
-    Tone('c', 60, false),
-    Tone('d', 62, false),
-    Tone('e', 64, false),
-    Tone('f', 65, false),
-    Tone('g', 67, false),
-    Tone('a', 69, false),
-    Tone('b', 71, false),
-    Tone('c', 72, false),
-  ];
-
   static Map notesList2 = {
     'C': Tone('C', 60, false),
     'C#': Tone('C#', 61, false),
@@ -50,6 +39,24 @@ class Tones {
     'B': Tone('c', 71, false),
     'C2': Tone('c', 72, false)
   };
+
+  static Map toneMap = {
+    'C': 60,
+    'C#/Db': 61,
+    'D': 62,
+    'D#/Eb': 63,
+    'E': 64,
+    'F': 65,
+    'F#/Gb': 66,
+    'G': 67,
+    'G#/Ab': 68,
+    'A': 69,
+    'A#/Bb': 70,
+    'B': 71,
+  };
+
+  static List<Map> toneList =
+      toneMap.entries.map((e) => {e.key: e.value}).toList();
 }
 
 class Scales {
@@ -69,6 +76,8 @@ class Scales {
     Tones.notesList2['B'],
     Tones.notesList2['C2'],
   ];
+
+  static List<int> majorPattern = [2, 2, 1, 2, 2, 2, 1];
 
   static List<Tone?> cMinor = [
     Tones.notesList2['C'],
