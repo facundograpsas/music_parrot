@@ -7,11 +7,14 @@ class ScalesController extends GetxController {
   var initialKeyNumber = 60.obs;
   var currentKeyNumber = 60.obs;
 
+  var initialScale = 'Major'.obs;
+  var currentScalePattern = Scales.scales['Major'].obs;
+
   @override
   void onReady() {
     super.onReady();
     currentScale.value = [
-      ...Scales.majorPattern.map((e) {
+      ...currentScalePattern.value!.map((e) {
         var tone = Tone('', initialKeyNumber.value, false).obs;
         initialKeyNumber += e;
         return tone;
@@ -25,7 +28,18 @@ class ScalesController extends GetxController {
     currentKeyNumber.listen((newKey) {
       initialKeyNumber.value = newKey;
       currentScale.value = [
-        ...Scales.majorPattern.map((e) {
+        ...currentScalePattern.value!.map((e) {
+          var tone = Tone('', initialKeyNumber.value, false).obs;
+          initialKeyNumber += e;
+          return tone;
+        })
+      ];
+    });
+
+    currentScalePattern.listen((newScale) {
+      initialKeyNumber.value = currentKeyNumber.value;
+      currentScale.value = [
+        ...currentScalePattern.value!.map((e) {
           var tone = Tone('', initialKeyNumber.value, false).obs;
           initialKeyNumber += e;
           return tone;
@@ -39,8 +53,6 @@ class ScalesController extends GetxController {
   var scaleName = 'C Major'.obs;
 
   changeScale(scale) {
-    if (scale == 'cMinor') {
-      currentScale.value = [...Scales.cMinor.map((e) => e.obs)].obs;
-    }
+    currentScalePattern.value = scale;
   }
 }

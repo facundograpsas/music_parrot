@@ -137,16 +137,22 @@ class _ScalesDropDownState extends State<ScalesDropDown> {
 
   @override
   Widget build(BuildContext context) {
-    return Obx(() => DropdownButton<String>(
-        value: controller.scaleName.value,
-        items: Scales.scalesNames.map<DropdownMenuItem<String>>((String value) {
-          return DropdownMenuItem<String>(value: value, child: Text(value));
-        }).toList(),
+    return Obx(() => DropdownButton(
+        value: controller.currentScalePattern.value,
+        items: Scales.scales
+            .map((scale, pattern) {
+              return MapEntry(
+                  scale,
+                  DropdownMenuItem<List<int>>(
+                      value: pattern, child: Text(scale)));
+            })
+            .values
+            .toList(),
         onChanged: onChanged));
   }
 
   void onChanged(value) {
-    controller.scaleName.value = value;
+    controller.changeScale(value);
   }
 }
 
