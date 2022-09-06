@@ -21,11 +21,19 @@ class Tones {
 class Scales {
   static Map<String, List<int>> scales = {
     'Major': majorPattern,
-    'Minor': minorPattern
+    'Minor': minorPattern,
+    'Lydian': lydianPattern,
+    'Dorian': dorianPattern,
+    'Mixolydian': mixolydianPattern,
+    'Phrygian': phrygianPattern
   };
 
-  static List<int> majorPattern = [2, 2, 1, 2, 2, 2, 1];
-  static List<int> minorPattern = [2, 1, 2, 2, 1, 2, 2];
+  static List<int> majorPattern = [2, 2, 1, 2, 2, 2, 1, 2];
+  static List<int> minorPattern = [2, 1, 2, 2, 1, 2, 2, 2];
+  static List<int> lydianPattern = [2, 2, 2, 1, 2, 2, 1, 2];
+  static List<int> dorianPattern = [2, 1, 2, 2, 2, 1, 2, 2];
+  static List<int> mixolydianPattern = [2, 2, 1, 2, 2, 1, 2, 2];
+  static List<int> phrygianPattern = [1, 2, 2, 2, 1, 2, 2, 1];
 }
 
 class Tone {
@@ -33,4 +41,13 @@ class Tone {
   final int number;
   bool isPlaying;
   Tone(this.note, this.number, this.isPlaying);
+}
+
+class Instruments {
+  static List<Map<String, String>> instruments = [
+    {'name': '8-Bits', 'path': 'assets/sf2/8bits.sf2'},
+    {'name': 'Super N', 'path': 'assets/sf2/superN.sf2'},
+    {'name': 'Parrot', 'path': 'assets/sf2/parrot.sf2'},
+    {'name': 'Electric guitar', 'path': 'assets/sf2/Electric_guitar.SF2'}
+  ];
 }

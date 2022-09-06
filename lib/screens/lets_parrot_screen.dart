@@ -4,9 +4,12 @@ import 'package:music_parrot/widgets/app_bar.dart';
 import 'package:music_parrot/widgets/parrot_image.dart';
 
 import '../constants/constants.dart';
+import '../controllers/parroter_controller.dart';
 import '../controllers/scales_controller.dart';
 import '../melodies_player.dart';
 import '../theme.dart';
+import '../widgets/dropdowns.dart';
+import '../widgets/note_button.dart';
 
 class LetsParrotScreen extends StatefulWidget {
   const LetsParrotScreen({Key? key}) : super(key: key);
@@ -17,9 +20,13 @@ class LetsParrotScreen extends StatefulWidget {
 
 class _LetsParrotScreenState extends State<LetsParrotScreen> {
   final controller = Get.put(ScalesController());
+  final pcontroller = Get.put(ParroterController());
 
   @override
   Widget build(BuildContext context) {
+    double unitHeightValue = MediaQuery.of(context).size.height * 0.01;
+    double multiplier = 2.5;
+
     return Scaffold(
         backgroundColor: Themes.lightTheme.colorScheme.background,
         appBar: const MyAppBar(widgets: [], title: Text("Let's parrot")),
@@ -31,23 +38,31 @@ class _LetsParrotScreenState extends State<LetsParrotScreen> {
                 children: [
                   const NotePlayer(),
                   SizedBox(
-                    height: MediaQuery.of(context).size.height * 0.3,
+                    height: MediaQuery.of(context).size.height * 0.4,
                     width: MediaQuery.of(context).size.width * 0.9,
                     child: Row(
                       children: [
                         Column(
                           mainAxisAlignment: MainAxisAlignment.center,
-                          children: const [
+                          children: [
                             Text(
                               "Select Key",
-                              style: TextStyle(fontSize: 22),
+                              style: TextStyle(
+                                  fontSize: multiplier * unitHeightValue),
                             ),
-                            KeysDropDown(),
+                            const KeysDropDown(),
                             Text(
                               "Select scale",
-                              style: TextStyle(fontSize: 22),
+                              style: TextStyle(
+                                  fontSize: multiplier * unitHeightValue),
                             ),
-                            ScalesDropDown(),
+                            const ScalesDropDown(),
+                            Text(
+                              'Select instrument',
+                              style: TextStyle(
+                                  fontSize: multiplier * unitHeightValue),
+                            ),
+                            const InstrumentsDropDown()
                           ],
                         ),
                         const Expanded(child: ParrotImage())
@@ -63,7 +78,7 @@ class _LetsParrotScreenState extends State<LetsParrotScreen> {
             children: [
               Ink(
                 child: InkWell(
-                  onTap: () => {controller.changeScale('cMinor')},
+                  onTap: () => {pcontroller.createMelody()},
                   child: Padding(
                     padding: const EdgeInsets.all(20.0),
                     child: Row(
@@ -85,18 +100,18 @@ class _LetsParrotScreenState extends State<LetsParrotScreen> {
               ),
               Ink(
                 child: InkWell(
-                  onTap: () => {},
+                  onTap: () => {pcontroller.repeat()},
                   child: Padding(
                     padding: const EdgeInsets.all(20.0),
                     child: Row(
                       children: const [
                         Icon(
-                          Icons.now_widgets_rounded,
+                          Icons.repeat,
                           size: 60,
                           color: Colors.purple,
                         ),
                         Text(
-                          'New',
+                          'Repeat',
                           style: TextStyle(fontSize: 26),
                         )
                       ],
@@ -122,99 +137,5 @@ class _LetsParrotScreenState extends State<LetsParrotScreen> {
                 }).toList(),
               )),
         ]));
-  }
-}
-
-class ScalesDropDown extends StatefulWidget {
-  const ScalesDropDown({super.key});
-
-  @override
-  State<ScalesDropDown> createState() => _ScalesDropDownState();
-}
-
-class _ScalesDropDownState extends State<ScalesDropDown> {
-  final controller = Get.put(ScalesController());
-
-  @override
-  Widget build(BuildContext context) {
-    return Obx(() => DropdownButton(
-        value: controller.currentScalePattern.value,
-        items: Scales.scales
-            .map((scale, pattern) {
-              return MapEntry(
-                  scale,
-                  DropdownMenuItem<List<int>>(
-                      value: pattern, child: Text(scale)));
-            })
-            .values
-            .toList(),
-        onChanged: onChanged));
-  }
-
-  void onChanged(value) {
-    controller.changeScale(value);
-  }
-}
-
-class KeysDropDown extends StatefulWidget {
-  const KeysDropDown({super.key});
-
-  @override
-  State<KeysDropDown> createState() => _KeysDropDownState();
-}
-
-class _KeysDropDownState extends State<KeysDropDown> {
-  final controller = Get.put(ScalesController());
-
-  @override
-  Widget build(BuildContext context) {
-    return Obx(() => DropdownButton(
-        value: controller.currentKeyNumber.value,
-        items: Tones.toneMap
-            .map((key, value) {
-              return MapEntry(
-                  key, DropdownMenuItem(value: value, child: Text(key)));
-            })
-            .values
-            .toList(),
-        onChanged: onChanged));
-  }
-
-  void onChanged(value) {
-    controller.currentKeyNumber.value = value;
-  }
-}
-
-class NoteButton extends StatelessWidget {
-  final String number;
-  final Function(TapDownDetails) onTapDown;
-  final Function(TapUpDetails) onTapUp;
-
-  const NoteButton({
-    required this.number,
-    required this.onTapDown,
-    required this.onTapUp,
-    Key? key,
-  }) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return Ink(
-        decoration: BoxDecoration(
-            border: Border.all(
-                color: const Color.fromARGB(255, 187, 255, 190), width: 1),
-            color: const Color.fromARGB(255, 76, 158, 55)),
-        height: 50,
-        width: 40,
-        child: InkWell(
-          onTapUp: (details) => onTapUp(details),
-          onTapDown: (details) => onTapDown(details),
-          // onTap: () => onTap,
-          child: Center(
-              child: Text(
-            number,
-            style: const TextStyle(color: Colors.white),
-          )),
-        ));
   }
 }

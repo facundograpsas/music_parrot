@@ -1,8 +1,13 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_midi/flutter_midi.dart';
 import 'package:get/get.dart';
+import 'package:music_parrot/controllers/parroter_controller.dart';
 
+import 'constants/constants.dart';
+import 'controllers/instrument_controller.dart';
 import 'controllers/scales_controller.dart';
 
 class NotePlayer extends StatefulWidget {
@@ -14,11 +19,18 @@ class NotePlayer extends StatefulWidget {
 
 class _NotePlayerState extends State<NotePlayer> {
   final controller = Get.put(ScalesController());
+  final icontroller = Get.put(InstrumentController());
+
+  final parroterController = Get.put(ParroterController());
+
   final _flutterMidi = FlutterMidi();
+
+  final _random = new Random();
+  var times = [250, 500, 1000];
 
   @override
   void initState() {
-    load('assets/sf2/miinstrumento-1.sf2');
+    load(icontroller.currentInstrument.value!);
 
     controller.currentScale.listen((p0) {
       for (var note in p0) {
@@ -31,6 +43,17 @@ class _NotePlayerState extends State<NotePlayer> {
         });
       }
     });
+
+    icontroller.currentInstrument.listen((p0) {
+      load(p0!);
+    });
+
+    parroterController.isPlaying.listen((p0) {
+      createMelodie();
+      print("aca");
+      // _flutterMidi.playMidiNote(midi: parroterController.melody[0].number);
+    });
+
     super.initState();
   }
 
@@ -51,5 +74,14 @@ class _NotePlayerState extends State<NotePlayer> {
   @override
   Widget build(BuildContext context) {
     return Container();
+  }
+
+  void createMelodie() async {
+    for (var element in parroterController.melody) {
+      _flutterMidi.playMidiNote(midi: element.number);
+      await Future.delayed(
+          Duration(milliseconds: times[_random.nextInt(times.length)]));
+      _flutterMidi.stopMidiNote(midi: element.number);
+    }
   }
 }
