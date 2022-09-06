@@ -7,7 +7,7 @@ import '../constants/constants.dart';
 
 class ParroterController extends GetxController {
   final controller = Get.put(ScalesController());
-  final _random = new Random();
+  final _random = Random();
 
   List<Tone> melody = [];
 

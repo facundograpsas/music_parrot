@@ -50,8 +50,6 @@ class _NotePlayerState extends State<NotePlayer> {
 
     parroterController.isPlaying.listen((p0) {
       createMelodie();
-      print("aca");
-      // _flutterMidi.playMidiNote(midi: parroterController.melody[0].number);
     });
 
     super.initState();

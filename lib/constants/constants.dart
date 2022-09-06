@@ -48,6 +48,5 @@ class Instruments {
     {'name': '8-Bits', 'path': 'assets/sf2/8bits.sf2'},
     {'name': 'Super N', 'path': 'assets/sf2/superN.sf2'},
     {'name': 'Parrot', 'path': 'assets/sf2/parrot.sf2'},
-    {'name': 'Electric guitar', 'path': 'assets/sf2/Electric_guitar.SF2'}
   ];
 }

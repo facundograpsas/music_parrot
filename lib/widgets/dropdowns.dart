@@ -18,6 +18,7 @@ class _ScalesDropDownState extends State<ScalesDropDown> {
   @override
   Widget build(BuildContext context) {
     return Obx(() => DropdownButton(
+        dropdownColor: const Color.fromARGB(255, 205, 255, 148),
         value: controller.currentScalePattern.value,
         items: Scales.scales
             .map((scale, pattern) {
@@ -49,6 +50,7 @@ class _InstrumentsDropDownState extends State<InstrumentsDropDown> {
   @override
   Widget build(BuildContext context) {
     return Obx(() => DropdownButton(
+        dropdownColor: const Color.fromARGB(255, 205, 255, 148),
         value: controller.currentInstrument.value,
         items: Instruments.instruments.map((e) {
           return DropdownMenuItem(value: e['path'], child: Text(e['name']!));
@@ -74,6 +76,7 @@ class _KeysDropDownState extends State<KeysDropDown> {
   @override
   Widget build(BuildContext context) {
     return Obx(() => DropdownButton(
+        dropdownColor: const Color.fromARGB(255, 205, 255, 148),
         value: controller.currentKeyNumber.value,
         items: Tones.toneMap
             .map((key, value) {
