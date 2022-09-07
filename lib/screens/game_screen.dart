@@ -4,7 +4,7 @@ import 'package:music_parrot/widgets/app_bar.dart';
 import 'package:music_parrot/widgets/parrot_image.dart';
 
 import '../controllers/scales_controller.dart';
-import '../note_player.dart';
+import '../widgets/note_player.dart';
 import '../theme.dart';
 
 class GameScreen extends StatefulWidget {

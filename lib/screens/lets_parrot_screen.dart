@@ -8,7 +8,7 @@ import 'package:music_parrot/widgets/parrot_image.dart';
 import '../constants/constants.dart';
 import '../controllers/parroter_controller.dart';
 import '../controllers/scales_controller.dart';
-import '../note_player.dart';
+import '../widgets/note_player.dart';
 import '../theme.dart';
 import '../widgets/dropdowns.dart';
 import '../widgets/note_button.dart';

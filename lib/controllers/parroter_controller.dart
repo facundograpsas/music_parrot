@@ -1,10 +1,7 @@
-import 'dart:developer';
 import 'dart:math';
-
 import 'package:flutter/foundation.dart';
 import 'package:get/get.dart';
 import 'package:music_parrot/controllers/scales_controller.dart';
-
 import '../constants/constants.dart';
 
 class ParroterController extends GetxController {

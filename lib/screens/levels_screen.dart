@@ -1,7 +1,7 @@
 import 'package:animations/animations.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:music_parrot/note_player.dart';
+import 'package:music_parrot/widgets/note_player.dart';
 import 'package:music_parrot/screens/game_screen.dart';
 
 import '../controllers/scales_controller.dart';

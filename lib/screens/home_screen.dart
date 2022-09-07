@@ -2,9 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:music_parrot/theme.dart';
 
-import 'widgets/app_bar.dart';
-import 'widgets/home_button.dart';
-import 'widgets/parrot_image.dart';
+import '../widgets/app_bar.dart';
+import '../widgets/home_button.dart';
+import '../widgets/parrot_image.dart';
 
 class MyHomePage extends StatefulWidget {
   const MyHomePage({Key? key, required this.title}) : super(key: key);

@@ -7,7 +7,7 @@ import 'package:music_parrot/screens/lets_parrot_screen.dart';
 import 'package:music_parrot/screens/levels_screen.dart';
 import 'package:music_parrot/theme.dart';
 
-import 'home.dart';
+import 'screens/home_screen.dart';
 
 void main() {
   runApp(const MyApp());

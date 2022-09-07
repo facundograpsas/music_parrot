@@ -5,8 +5,8 @@ import 'package:flutter/services.dart';
 import 'package:flutter_midi/flutter_midi.dart';
 import 'package:get/get.dart';
 import 'package:music_parrot/controllers/parroter_controller.dart';
-import 'controllers/instrument_controller.dart';
-import 'controllers/scales_controller.dart';
+import '../controllers/instrument_controller.dart';
+import '../controllers/scales_controller.dart';
 
 class NotePlayer extends StatefulWidget {
   const NotePlayer({Key? key}) : super(key: key);
@@ -16,21 +16,16 @@ class NotePlayer extends StatefulWidget {
 }
 
 class _NotePlayerState extends State<NotePlayer> {
-  final controller = Get.put(ScalesController());
-  final icontroller = Get.put(InstrumentController());
-
+  final scalesController = Get.put(ScalesController());
+  final instrumentController = Get.put(InstrumentController());
   final parroterController = Get.put(ParroterController());
-
   final _flutterMidi = FlutterMidi();
-
-  final _random = new Random();
-  var times = [250, 500, 1000];
 
   @override
   void initState() {
-    load(icontroller.currentInstrument.value!);
+    load(instrumentController.currentInstrument.value!);
 
-    controller.currentScale.listen((p0) {
+    scalesController.currentScale.listen((p0) {
       for (var note in p0) {
         note.listen((p0) {
           if (p0!.isPlaying) {
@@ -43,7 +38,7 @@ class _NotePlayerState extends State<NotePlayer> {
       }
     });
 
-    icontroller.currentInstrument.listen((p0) {
+    instrumentController.currentInstrument.listen((p0) {
       load(p0!);
     });
 
