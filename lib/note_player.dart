@@ -5,8 +5,6 @@ import 'package:flutter/services.dart';
 import 'package:flutter_midi/flutter_midi.dart';
 import 'package:get/get.dart';
 import 'package:music_parrot/controllers/parroter_controller.dart';
-
-import 'constants/constants.dart';
 import 'controllers/instrument_controller.dart';
 import 'controllers/scales_controller.dart';
 
@@ -37,6 +35,7 @@ class _NotePlayerState extends State<NotePlayer> {
         note.listen((p0) {
           if (p0!.isPlaying) {
             _play(p0.number);
+            parroterController.handlePlayerSequence(p0.number);
           } else {
             _stop(p0.number);
           }
@@ -76,10 +75,9 @@ class _NotePlayerState extends State<NotePlayer> {
 
   void createMelodie() async {
     for (var element in parroterController.melody) {
-      _flutterMidi.playMidiNote(midi: element.number);
-      await Future.delayed(
-          Duration(milliseconds: times[_random.nextInt(times.length)]));
-      _flutterMidi.stopMidiNote(midi: element.number);
+      _flutterMidi.playMidiNote(midi: element['tone'].number);
+      await Future.delayed(Duration(milliseconds: element['duration']));
+      _flutterMidi.stopMidiNote(midi: element['tone'].number);
     }
   }
 }
